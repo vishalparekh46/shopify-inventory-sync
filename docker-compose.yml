@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: sync
+      POSTGRES_PASSWORD: sync
+      POSTGRES_DB: inventory_sync
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sync"]
+      interval: 5s
+      retries: 10
+
+  app:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://sync:sync@db:5432/inventory_sync
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    command: sh -c "node scripts/migrate.js && node src/index.js"
+
+volumes:
+  pgdata:

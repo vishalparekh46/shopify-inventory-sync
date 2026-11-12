@@ -1,0 +1,31 @@
+{
+  "name": "shopify-inventory-sync",
+  "version": "1.0.0",
+  "description": "Keep Shopify multi-location inventory in sync with a WMS or ERP — webhook-driven, batched, oversell-safe. Node.js + PostgreSQL.",
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "migrate": "node scripts/migrate.js",
+    "reconcile": "node scripts/reconcile.js",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "shopify",
+    "inventory",
+    "wms",
+    "erp",
+    "multi-location",
+    "graphql",
+    "webhooks",
+    "postgresql"
+  ],
+  "author": "Vishal Parekh",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^8.13.1"
+  }
+}
